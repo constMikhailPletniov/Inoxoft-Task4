@@ -3,9 +3,8 @@
 
 
 const { getUsers } = require('../services/user.service');
-const { BAD_REQUEST, NOT_FOUND, CREATE } = require('../config/conf');
+const { BAD_REQUEST, CREATE } = require('../config/conf');
 const { User } = require('../database');
-const { ErrorHandler } = require('../errors/errors.handler');
 
 module.exports = {
     createUser: async (req, res, next) => {
@@ -40,9 +39,6 @@ module.exports = {
             const { user_id } = req.params;
             const userById = await User.findById(user_id);
 
-            if (!userById) {
-                throw new ErrorHandler(NOT_FOUND, 'Not found');
-            }
             res.json(userById);
         } catch (err) {
             next(err);

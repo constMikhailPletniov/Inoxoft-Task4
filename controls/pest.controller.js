@@ -1,9 +1,8 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-magic-numbers */
 const { Pest } = require('../database');
-const { BAD_REQUEST, CREATE, NOT_FOUND } = require('../config');
+const { BAD_REQUEST, CREATE } = require('../config');
 const { pestService } = require('../services');
-const { ErrorHandler } = require('../errors/errors.handler');
 
 module.exports = {
 
@@ -22,11 +21,6 @@ module.exports = {
             const { pest_id } = req.params;
 
             const pestDelete = await Pest.findByIdAndDelete(pest_id);
-
-            if (!pestDelete) {
-
-                throw new ErrorHandler(NOT_FOUND, 'Not Found');
-            }
 
             res.status(200).json(pestDelete);
         } catch (err) {
@@ -47,10 +41,6 @@ module.exports = {
             const { pest_id } = req.params;
 
             const findPest = await Pest.findById(pest_id);
-
-            if (!findPest) {
-                throw new ErrorHandler(NOT_FOUND, 'Not Found');
-            }
 
             res.status(200).json(findPest);
 
